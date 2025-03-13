@@ -13,14 +13,14 @@
  **/
 charset_t get_charset(void) {
   charset_t charset = 0;
-  char* buffer = malloc(5);
+  char* buffer = malloc(64);
 
-  (void) fgets(buffer, 5,stdin);
+  (void) fgets(buffer, 64,stdin);
 
   char* current_char = NULL;
   int current = 0;
   for (size_t i = 0; i < sizeof(buffer); ++i) {
-    current_char = strdupli(buffer,1);
+    current_char = strdupli(buffer, i);
     current = atoi(current_char);
     switch (current){
       case 1:
@@ -44,24 +44,28 @@ charset_t get_charset(void) {
         return (charset_t) 0;
     }
   }
-
+  
+  free(buffer);
+  free(current_char);
   return charset;
 }
 
 /**
- * This function duplicate the len th first charracter of a string 
+ * This function duplicate the charracter at position index of a string 
  *
  * @parm[.in]  buffer  The original string
- * @parm[.in]  len     The amout of character to copy
+ * @parm[.in]  index   The index of buffer to by copied
  *
- * Return a len + 1 long string
+ * Return a 2 bytes long string
 **/
-char* strdupli(char* buffer, size_t len) {
-  char* result = malloc(len + 1);
-  for (size_t i = 0; i < len; ++i) {
-    result[i] = buffer[i];
+char* strdupli(char* buffer, size_t index) {
+  char* result = malloc(2);
+  if (!result) {
+    perror("malloc");
+    return NULL; // return result; XD
   }
-  result[len + 1] = "\0";
+  result[0] = buffer[index];
+  result[1] = "\0";
   return result;
 }
 
