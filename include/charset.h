@@ -10,7 +10,8 @@ typedef enum {
 } charset_t;
 
 
-charset_t get_charset(void);
+charset_t  get_charset  (void);
+char*      strdupli     (char* buffer, size_t len);
 
 #endif
 

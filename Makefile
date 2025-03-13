@@ -1,5 +1,5 @@
 CC = gcc
-CFLAGS = -Wall -Wextra -Wpedantic -Iinclude
+CFLAGS = -Wall -Wextra -Wpedantic -Iinclude -ggdb
 SRCS = $(wildcard src/*.c)
 OBJS = $(patsubst src/%.c,obj/%.o,$(SRCS))
 EXEC = passgen
