@@ -1,7 +1,9 @@
 #ifndef LENGTH_H
 #define LENGTH_H
 
-int  get_length  (void);
+#include <stdint.h>
+
+size_t  get_length  (void);
 
 #endif
 

@@ -13,7 +13,7 @@
  *
  * Returns the length desired
 **/
-int get_length(void) {
+size_t get_length(void) {
   char* buffer = malloc(2);
 
   (void) fgets(buffer, 2, stdin);

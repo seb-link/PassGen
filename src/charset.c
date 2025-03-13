@@ -14,15 +14,21 @@
 charset_t get_charset(void) {
   charset_t charset = 0;
   char* buffer = malloc(64);
+  if (!buffer) {
+    perror("malloc");
+    return 0;
+  }
 
   (void) fgets(buffer, 64,stdin);
 
   char* current_char = NULL;
   int current = 0;
   for (size_t i = 0; i < sizeof(buffer); ++i) {
-    current_char = strdupli(buffer, i);
-    current = atoi(current_char);
-    switch (current){
+    current = (int) buffer[i] - 48; // Sorry for the magic number. 1 in ascii is 49
+    if (current < 0) break;
+    switch (current) {
+      case 0 :
+        break; // The rest of the buffer
       case 1:
 	charset |= CHAR_LOWER;
 	break;
@@ -41,7 +47,7 @@ charset_t get_charset(void) {
       
       default :
 	printf("Unknow option : %d\n", current);
-        return (charset_t) 0;
+        return 0;
     }
   }
   
@@ -49,25 +55,4 @@ charset_t get_charset(void) {
   free(current_char);
   return charset;
 }
-
-/**
- * This function duplicate the charracter at position index of a string 
- *
- * @parm[.in]  buffer  The original string
- * @parm[.in]  index   The index of buffer to by copied
- *
- * Return a 2 bytes long string
-**/
-char* strdupli(char* buffer, size_t index) {
-  char* result = malloc(2);
-  if (!result) {
-    perror("malloc");
-    return NULL; // return result; XD
-  }
-  result[0] = buffer[index];
-  result[1] = "\0";
-  return result;
-}
-
-
 
