@@ -1,6 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
-
+#include <string.h>
 
 #include "password.h"
 
@@ -15,14 +15,21 @@
  * Returns the password as a string
 **/
 char* generate_password(charset_t charset, size_t length) {
-  size_t len = 0;
-
   char* password    = NULL;
-  char* charset_str = NULL;
-  char* lower       = NULL; 
-  char* upper       = NULL;
-  char* numbers     = NULL;
-  char* temp        = NULL;
+  
+  char* charset_str = parse_charset(charset);
+  puts(charset_str); 
+  // Still in development...
+  return NULL;
+}
+
+
+char* parse_charset(charset_t charset) {
+  size_t len         = 0; 
+  char*  lower       = NULL; 
+  char*  upper       = NULL;
+  char*  numbers     = NULL;
+  char*  charset_str = NULL;
 
   if (charset & CHAR_LOWER) {
     len += 26;
@@ -36,37 +43,14 @@ char* generate_password(charset_t charset, size_t length) {
     len += 10;
     numbers = "0123456789";
   }
-  printf("charset len = %ld\n", len);
   charset_str = malloc(len + 1);
-  if (lower) {
-    temp = malloc(len + 1);
-    char* ntemp;
-    snprintf(temp, len - 25,"%s", charset_str);
-    snprintf(temp, 27 ,"%s%s", temp,lower);
-    ntemp = realloc(temp,len);
-    snprintf(charset_str, len, "%s", ntemp);
-    printf("%s\n",charset_str);
-    free(ntemp);
+  if (!charset_str) return NULL;
+  for (int i = 0; i < len + 1; ++i) {
+    charset_str[i] = (char) 0;
   }
-  if (upper) {
-    temp = malloc(len + 1);
-    char* ntemp;
-    snprintf(temp, len - 25,"%s", charset_str);
-    snprintf(temp, len + 1,"%s%s", temp,upper);
-    ntemp = realloc(temp,len);
-    snprintf(charset_str, len + 1, "%s", ntemp);
-    free(ntemp);
-  }
-  if (numbers) {
-    temp = malloc(len + 1);
-    char* ntemp;
-    snprintf(temp, len - 11,"%s", charset_str);
-    snprintf(temp, len + 1,"%s%s", temp,numbers);
-    ntemp = realloc(temp,len);
-    snprintf(charset_str, len + 1, "%s", ntemp);
-    free(ntemp);
-  }
-  puts(charset_str);
-  return NULL;
-}
+  if (lower)   strcat(charset_str, lower)  ;
+  if (upper)   strcat(charset_str, upper)  ;
+  if (numbers) strcat(charset_str, numbers);
+  return charset_str;
+} 
 

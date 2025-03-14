@@ -6,6 +6,7 @@
 #include "charset.h"
 
 char*  generate_password  (charset_t charset, size_t length);
+char*  parse_charset      (charset_t charset);
 
 #endif
 

@@ -6,13 +6,13 @@
 #include "password.h"
 
 int main(void) {
-  charset_t charset  =  get_charset();   // Get the character to use
+  charset_t charset = get_charset();   // Get the character to use
   if (charset == 0) return 1;
-  printf("%d\n",charset);  
-  size_t length   =  get_length();    // Get the password length
+  
+  size_t length =  get_length();       // Get the password length
   if (length == 0) return 1;
   
-  char* password = malloc(length);   // Password to be generated
+  char* password = malloc(length);     // Password to be generated
   if (!password) {
     perror("malloc");
     return 1;
