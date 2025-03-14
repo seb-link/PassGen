@@ -7,8 +7,8 @@
 /**
  * This function generate a password
  *
- * @parm[.in]  charset  The charset to use
- * @parm[.in]  length   The length of the password
+ * @param[.in]  charset  The charset to use
+ * @param[.in]  length   The length of the password
  *
  * @error  Returns NULL if an error is encountered
  *

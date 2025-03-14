@@ -7,7 +7,7 @@
 /**
  * This function ask for user the length of the password
  *
- * @parm[.in]  (void)  No args taken
+ * @param[.in]  (void)  No args taken
  *
  * @errors  Returns 0 on error
  *
