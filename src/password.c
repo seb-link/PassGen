@@ -23,7 +23,13 @@ char* generate_password(charset_t charset, size_t length) {
   return NULL;
 }
 
-
+/**
+ * This function convert a charset_t into a char*
+ *
+ * @param[.in]  charset  The charset to be converted
+ *
+ * Returns the charset in a string
+**/
 char* parse_charset(charset_t charset) {
   size_t len         = 0; 
   char*  lower       = NULL; 
