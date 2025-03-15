@@ -1,6 +1,7 @@
 #ifndef CHARSET_H
 #define CHARSET_H
 
+#include <stdint.h>
 
 typedef enum {
 	CHAR_LOWER  = 1<<1, // Is there lowercase

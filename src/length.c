@@ -14,9 +14,9 @@
  * Returns the length desired
 **/
 size_t get_length(void) {
-  char* buffer = malloc(2);
+  char* buffer = malloc(64);
 
-  (void) fgets(buffer, 2, stdin);
+  (void) fgets(buffer, 64, stdin);
   if (!buffer) {
     perror("fgets");
     return 0;

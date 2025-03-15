@@ -21,6 +21,6 @@ int main(void) {
   password = generate_password(charset, length);
   if (!password) // If password == NULL then an error occured
     return 1;
-  
+  puts(password);
   return 0;
 }
