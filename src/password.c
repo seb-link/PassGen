@@ -44,7 +44,7 @@ char* generate_password(charset_t charset, size_t length) {
     sprintf(time_msg, "%.3lfs", time);
   }
   printf("It will take : %s to crack\n", time_msg);
-
+  
   return password;
 }
 
@@ -78,7 +78,7 @@ charset_str_t* parse_charset(charset_t charset) {
     numbers = "0123456789";
   }
   if (charset & CHAR_SYMBOL) {
-    len += 28;
+    len += 27;
     symbols = "!#$&()*+,-./:;<=>?@[\\]^_{|}";
   }
 
