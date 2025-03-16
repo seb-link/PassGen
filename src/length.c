@@ -9,7 +9,7 @@
  *
  * @param[.in]  (void)  No args taken
  *
- * @errors  Returns 0 on error
+ * @exception  Returns 0 on error
  *
  * Returns the length desired
 **/

@@ -7,7 +7,7 @@
  * @param[.in]  length   The length of the password
  *
  * @exception NULL if an error is encountered
- *
+ * 
  * Returns the password as a string
 **/
 char* generate_password(charset_t charset, size_t length) {
