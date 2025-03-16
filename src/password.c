@@ -22,7 +22,28 @@ char* generate_password(charset_t charset, size_t length) {
     if (index < 0) return NULL;
     password[i] = charset_str->charset[index];
   }
-    
+  
+  double possibilities = pow(charset_str->length, length);
+  double entropy       = log2(possibilities);
+  printf("This password as an entropy is : %lf.\n", entropy);
+
+  size_t speed = 240000000000;     // Assuming 24 000 000 000 guess per seconds
+  double time  = possibilities / speed;
+
+  char* time_msg = malloc(100);
+  if (time / 31536000 > 1) { // 31 536 000s = 1y
+    double y =  (time / 31536000);
+    sprintf(time_msg, "%.2lf years", y);
+  }else if (time / 3600 > 1) {
+    double h =  (time / 3600);
+    sprintf(time_msg, "%.2lfh and %.3lfs", h, time - (int)(h) * 3600);
+  }else if(time / 60 > 1) {
+    sprintf(time_msg, "%.1lfmin", time / 60);
+  }else {
+    sprintf(time_msg, "%.3lfs", time);
+  }
+  printf("It will take : %s to crack\n", time_msg);
+
   return password;
 }
 
