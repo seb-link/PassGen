@@ -16,6 +16,7 @@
 size_t get_length(void) {
   char* buffer = malloc(64);
 
+  printf("Enter the length of the password : ");
   (void) fgets(buffer, 64, stdin);
   if (!buffer) {
     perror("fgets");

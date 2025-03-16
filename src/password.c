@@ -38,6 +38,7 @@ charset_str_t* parse_charset(charset_t charset) {
   char*  lower       = NULL; 
   char*  upper       = NULL;
   char*  numbers     = NULL;
+  char*  symbols     = NULL;
   char*  charset_str = NULL;
 
   static charset_str_t charset_str_struct;
@@ -54,6 +55,10 @@ charset_str_t* parse_charset(charset_t charset) {
     len += 10;
     numbers = "0123456789";
   }
+  if (charset & CHAR_SYMBOL) {
+    len += 28;
+    symbols = "!#$&()*+,-./:;<=>?@[\\]^_{|}";
+  }
 
   charset_str = malloc(len + 1);
   if (!charset_str) return NULL;
@@ -65,6 +70,7 @@ charset_str_t* parse_charset(charset_t charset) {
   if (lower)   strcat(charset_str, lower)  ;
   if (upper)   strcat(charset_str, upper)  ;
   if (numbers) strcat(charset_str, numbers);
+  if (symbols) strcat(charset_str, symbols);
 
   charset_str_struct.charset = charset_str;
   charset_str_struct.length  = len;

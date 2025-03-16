@@ -18,7 +18,8 @@ charset_t get_charset(void) {
     perror("malloc");
     return 0;
   }
-
+  
+  printf("Enter the charset to use (1 : lowercase, 2 : uppercase, 3 : numbers, 4 : symbols) : ");
   (void) fgets(buffer, 64,stdin);
 
   char* current_char = NULL;
@@ -30,23 +31,23 @@ charset_t get_charset(void) {
       case 0 :
         break; // The rest of the buffer
       case 1:
-	charset |= CHAR_LOWER;
-	break;
+        charset |= CHAR_LOWER;
+        break;
       
       case 2:
-	charset |= CHAR_UPPER;
-	break;
+        charset |= CHAR_UPPER;
+        break;
 
       case 3 :
-	charset |= CHAR_NUMS;
+        charset |= CHAR_NUMS;
         break;
       
       case 4 :
-	charset |= CHAR_SYMBOL;
-	break;
+        charset |= CHAR_SYMBOL;
+	      break;
       
       default :
-	printf("Unknow option : %d\n", current);
+        printf("Unknow option : %d\n", current);
         return 0;
     }
   }
