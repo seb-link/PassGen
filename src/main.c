@@ -21,6 +21,10 @@ int main(void) {
   password = generate_password(charset, length);
   if (!password) // If password == NULL then an error occured
     return 1;
+
+  printf("Your password is : ");
   puts(password);
+
+  free(password);
   return 0;
 }

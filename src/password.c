@@ -11,7 +11,7 @@
  * Returns the password as a string
 **/
 char* generate_password(charset_t charset, size_t length) {
-  char* password = malloc(length);
+  char* password = malloc(length + 1);
   if (!password) return NULL;
   
   charset_str_t* charset_str = parse_charset(charset);
@@ -22,6 +22,7 @@ char* generate_password(charset_t charset, size_t length) {
     if (index < 0) return NULL;
     password[i] = charset_str->charset[index];
   }
+  password[length + 1] = '\0';
   
   double possibilities = pow(charset_str->length, length);
   double entropy       = log2(possibilities);
