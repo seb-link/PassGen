@@ -19,8 +19,8 @@ char* generate_password(charset_t charset, size_t length) {
   int index;
   for (size_t i = 0; i < length; ++i) {
     index = random_int(charset_str->length);
+    if (index < 0) return NULL;
     password[i] = charset_str->charset[index];
-    printf("Random number : %d\n",index);
   }
     
   return password;
@@ -93,8 +93,8 @@ charset_str_t* parse_charset(charset_t charset) {
     }
 
     int num;
-    fread(&num, sizeof(num), 1, f);
-    if (num < 0) {
+    size_t res = fread(&num, sizeof(num), 1, f);
+    if (res < 0) {
       perror("fread");
       return -1;
     }
