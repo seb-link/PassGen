@@ -11,7 +11,7 @@
  *
  * @exception  Returns 0 on error
  *
- * Returns the length desired
+ * @return the length desired as a size_t
 **/
 size_t get_length(void) {
   char* buffer = malloc(64);

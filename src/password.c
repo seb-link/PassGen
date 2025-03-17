@@ -8,7 +8,7 @@
  *
  * @exception NULL if an error is encountered
  * 
- * Returns the password as a string
+ * @return the password as a string
 **/
 char* generate_password(charset_t charset, size_t length) {
   char* password = malloc(length + 1);
@@ -55,7 +55,7 @@ char* generate_password(charset_t charset, size_t length) {
  *
  * @param[.in]  charset  The charset to be converted
  *
- * Returns the charset in a string
+ * @return the charset in a string
 **/
 charset_str_t* parse_charset(charset_t charset) {
   size_t len         = 0; 
