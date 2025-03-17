@@ -12,7 +12,7 @@ int main(void) {
   size_t length =  get_length();       // Get the password length
   if (length == 0) return 1;
   
-  char* password = malloc(length);     // Password to be generated
+  char* password = malloc(length + 1);     // Password to be generated
   if (!password) {
     perror("malloc");
     return 1;

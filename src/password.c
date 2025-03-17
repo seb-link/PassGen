@@ -28,7 +28,7 @@ char* generate_password(charset_t charset, size_t length) {
   double entropy       = log2(possibilities);
   printf("This password as an entropy is : %lf.\n", entropy);
 
-  size_t speed = 240000000000;     // Assuming 24 000 000 000 guess per seconds
+  size_t speed = 240 * (size_t)(pow(10,9)) ;   // Assuming 240 000 000 000 guess per seconds
   double time  = possibilities / speed;
 
   char* time_msg = malloc(100);
@@ -45,17 +45,20 @@ char* generate_password(charset_t charset, size_t length) {
   }else {
     sprintf(time_msg, "%.3lfs", time);
   }
-  printf("It will take : %s to crack\n", time_msg);
   
+  printf("It will take : %s to crack\n", time_msg);
+
+  free(time_msg);
+
   return password;
 }
 
 /**
- * This function convert a charset_t into a char*
+ * This function convert a charset_t into a charset_str_t
  *
  * @param[.in]  charset  The charset to be converted
  *
- * @return the charset in a string
+ * @return the charset as a pointer to a charset_str_t (defined in "password.h")
 **/
 charset_str_t* parse_charset(charset_t charset) {
   size_t len         = 0; 
