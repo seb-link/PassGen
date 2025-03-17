@@ -32,6 +32,8 @@ char* generate_password(charset_t charset, size_t length) {
   double time  = possibilities / speed;
 
   char* time_msg = malloc(100);
+  
+  // Spaghetti code
   if (time / 31536000 > 1) { // 31 536 000s = 1y
     double y =  (time / 31536000);
     sprintf(time_msg, "%.2lf years", y);
