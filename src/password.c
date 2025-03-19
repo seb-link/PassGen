@@ -26,13 +26,19 @@ char* generate_password(charset_t charset, size_t length) {
   
   double possibilities = pow(charset_str->length, length);
   double entropy       = log2(possibilities);
-  printf("This password as an entropy is : %lf.\n", entropy);
-
+  
   size_t speed = 240 * (size_t)(pow(10,9)) ;   // Assuming 240 000 000 000 guess per seconds
   double time  = possibilities / speed;
 
-  char* time_msg = malloc(100);
+     
+  if (entropy == INFINITY) {
+    printf("This password powerfulness is impossible to compute making it virtually impossible to crack with the use of conventional methods.\n");
+    return password;
+  }
+  printf("This password as an entropy is : %lf.\n", entropy);
   
+  char* time_msg = malloc(100);
+
   // Spaghetti code
   if (time / 31536000 > 1) { // 31 536 000s = 1y
     double y =  (time / 31536000);
