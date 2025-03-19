@@ -16,6 +16,6 @@ obj:
 	mkdir -p obj
 
 clean:
-	rm -rf obj $(EXEC)
+	rm -rf build obj $(EXEC)
 
 .PHONY: all clean
