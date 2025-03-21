@@ -1,3 +1,4 @@
+#include "common.h"
 #include "password.h"
 
 /**
@@ -133,7 +134,7 @@ charset_str_t* parse_charset(charset_t charset) {
 
     int num;
     size_t res = fread(&num, sizeof(num), 1, f);
-    if (res < 0) {
+    if (res == 0) {
       perror("fread");
       return -1;
     }

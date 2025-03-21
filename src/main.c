@@ -1,6 +1,4 @@
-#include <stdio.h>
-#include <stdlib.h>
-
+#include "common.h"
 #include "charset.h"
 #include "length.h"
 #include "password.h"
@@ -10,7 +8,7 @@ int main(void) {
   if (charset == 0) return 1;
   
   size_t length =  get_length();       // Get the password length
-  if (length < 0) return 1;
+  if (length == 0) return 1;
   
   char* password = malloc(length + 1);     // Password to be generated
   if (!password) {
