@@ -24,6 +24,8 @@ char* generate_password(charset_t charset, size_t length) {
     password[i] = charset_str->charset[index];
   }
   password[length + 1] = '\0';
+ 
+  free(charset_str->charset);
   
   double possibilities = pow(charset_str->length, length);
   double entropy       = log2(possibilities);
