@@ -6,3 +6,5 @@ file(GLOB SOURCES "src/*.c")
 include_directories("include/")
 
 add_executable(passgen ${SOURCES})
+
+target_link_libraries(passgen PRIVATE m)
