@@ -35,6 +35,7 @@ typedef struct {
 
 char*           generate_password  (charset_t charset, size_t length);
 charset_str_t*  parse_charset      (charset_t charset);
+void            print_time         (charset_str_t* charset_str, size_t length);
 time_data_t*    timeconvert        (double seconds);
 
 #endif
