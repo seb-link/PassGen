@@ -30,6 +30,3 @@ size_t get_length(void) {
 
   return length; // length will be 0 on error 
 }
-
-
-

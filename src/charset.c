@@ -53,4 +53,3 @@ charset_t get_charset(void) {
   free(current_char);
   return charset;
 }
-
