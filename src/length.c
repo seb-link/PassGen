@@ -22,6 +22,9 @@ size_t get_length(void) {
   }
 
   int length = atoi(buffer);
+  if (length < 0) {
+    length = 0;
+  }
    
   free(buffer);
 

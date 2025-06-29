@@ -4,7 +4,7 @@
 /** 
  * Ask the user for the charset to use
  *
- * @param[in]  (void)   No parameter taken  
+ * @param[in]  (void)   No parameter taken
  *
  * @return a charset_t (defined in "charset.h") that represent the desired charset
  **/

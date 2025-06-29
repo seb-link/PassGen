@@ -20,10 +20,14 @@ char* generate_password(charset_t charset, size_t length) {
   int index;
   for (size_t i = 0; i < length; ++i) {
     index = random_int(charset_str->length);
-    if (index < 0) return NULL;
+    if (index < 0) {
+      free(password);
+      free(charset_str->charset);  
+      return NULL;
+    }
     password[i] = charset_str->charset[index];
   }
-  password[length + 1] = '\0';
+  password[length] = '\0';
  
   free(charset_str->charset);
 
@@ -85,7 +89,7 @@ charset_str_t* parse_charset(charset_t charset) {
 }
 
 // This functions print the estimated time to crack a password
-void print_time(charset_str_t* charset_str, size_t length) { 
+void print_time(charset_str_t* charset_str, size_t length) {
   double possibilities = pow(charset_str->length, length);
   double entropy       = log2(possibilities);
   
