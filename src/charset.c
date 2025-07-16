@@ -45,7 +45,8 @@ charset_t get_charset(void) {
       
       default :
         printf("Unknow option : %d\n", current);
-        return 0;
+        free(buffer);
+	return 0;
     }
   }
   
