@@ -15,9 +15,10 @@ int main(void) {
   char* password = NULL;               // Password to be generated
  
   password = generate_password(charset, length);
-  if (!password) // If password == NULL then an error occured
+  if (!password) { // If password == NULL then an error occured
+    fprintf(stderr, "An error occured while generating the password\n");
     return 1;
- 
+  }
   printf("Your password is : ");
   puts(password);
 
