@@ -1,7 +1,10 @@
 #ifndef PASSWORD_H
 #define PASSWORD_H
 
+#include <stddef.h>
+
 #include "charset.h"
+
 
 #ifdef _WIN32
 

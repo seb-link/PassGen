@@ -2,6 +2,7 @@
 #define LENGTH_H
 
 #include <stdint.h>
+#include <stddef.h>
 
 size_t  get_length  (void);
 
