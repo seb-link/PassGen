@@ -22,7 +22,6 @@ charset_t get_charset(void)
          "4 : symbols) : ");
   (void)fgets(buffer, 64, stdin);
 
-  char *current_char = NULL;
   int current = 0;
   for (size_t i = 0; i < sizeof(buffer); ++i) {
     current =
@@ -56,6 +55,5 @@ charset_t get_charset(void)
   }
 
   free(buffer);
-  free(current_char);
   return charset;
 }
