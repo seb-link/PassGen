@@ -170,7 +170,7 @@ time_data_t *timeconvert(double seconds)
 static unsigned int calculate_timeleft(double *timeleft,
                                        unsigned int time_in_sec)
 {
-  unsigned int result = (unsigned int) *timeleft / time_in_sec;
+  unsigned int result = (unsigned int) (*timeleft / time_in_sec);
   *timeleft -= result * time_in_sec;
   return result;
 }
