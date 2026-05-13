@@ -158,15 +158,10 @@ time_data_t *timeconvert(double seconds)
   }
 
   time.years = calculate_timeleft(&timeleft, 3600 * 24 * 365);
-
   time.months = calculate_timeleft(&timeleft, 3600 * 24 * 30);
-
   time.days = calculate_timeleft(&timeleft, 3600 * 24);
-
   time.hours = calculate_timeleft(&timeleft, 3600);
-
   time.minutes = calculate_timeleft(&timeleft, 60);
-
   time.seconds = timeleft;
 
   return &time;
@@ -175,16 +170,8 @@ time_data_t *timeconvert(double seconds)
 static unsigned int calculate_timeleft(double *timeleft,
                                        unsigned int time_in_sec)
 {
-
-  unsigned int result = 0;
-
-  if (*timeleft / time_in_sec > 1) {
-    while (*timeleft / time_in_sec > 1) {
-      *timeleft -= time_in_sec;
-      result++;
-    }
-  }
-
+  unsigned int result = (unsigned int) *timeleft / time_in_sec;
+  *timeleft -= result * time_in_sec;
   return result;
 }
 
