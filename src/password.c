@@ -1,9 +1,11 @@
 #include "password.h"
 #include "common.h"
 
+#include <stdlib.h>
+#include <stddef.h>
 
 static unsigned int calculate_timeleft(double *timeleft,
-                                       unsigned int time_in_sec);
+                                       unsigned long long time_in_sec);
 
 /**
  * This function generate a password
@@ -107,7 +109,7 @@ void print_time(charset_str_t *charset_str, size_t length)
   double entropy = log2(possibilities);
 
   size_t speed =
-      240 * (size_t)(pow(10, 9)); // Assuming 240 000 000 000 guess per seconds
+      240 * (size_t)(pow(10, 9)); // Assuming 240 billions guess per seconds
   double time = possibilities / speed;
 
   if (entropy == INFINITY) {
@@ -118,9 +120,7 @@ void print_time(charset_str_t *charset_str, size_t length)
   }
   printf("This password as an entropy is : %lf.\n", entropy);
 
-  unsigned long long mill_sec =
-      31536000000001ULL; // 1000 millenniums in seconds !
-  if (time > mill_sec) {
+  if (time > MILLENNIUM_SECONDS*1000) {
     printf(
         "It would take more than 1000 millenniums to crack this password !\n");
   } else {
@@ -142,21 +142,13 @@ void print_time(charset_str_t *charset_str, size_t length)
   }
 }
 
-time_data_t *timeconvert(double seconds)
+time_data_t *timeconvert(const double seconds)
 {
   double timeleft = seconds;
 
   static time_data_t time;
 
-  unsigned long long mill_sec = 31536000000ULL;
-  // Millennium
-  if (timeleft / mill_sec > 1) {
-    while (timeleft / mill_sec > 1) {
-      timeleft -= mill_sec;
-      time.millennium += 1;
-    }
-  }
-
+  time.millennium = calculate_timeleft(&timeleft, MILLENNIUM_SECONDS); 
   time.years = calculate_timeleft(&timeleft, 3600 * 24 * 365);
   time.months = calculate_timeleft(&timeleft, 3600 * 24 * 30);
   time.days = calculate_timeleft(&timeleft, 3600 * 24);
@@ -168,7 +160,7 @@ time_data_t *timeconvert(double seconds)
 }
 
 static unsigned int calculate_timeleft(double *timeleft,
-                                       unsigned int time_in_sec)
+                                       unsigned long long time_in_sec)
 {
   unsigned int result = (unsigned int) (*timeleft / time_in_sec);
   *timeleft -= result * time_in_sec;
