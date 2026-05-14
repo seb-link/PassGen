@@ -1,8 +1,8 @@
 #include "password.h"
 #include "common.h"
 
-#include <stdlib.h>
 #include <stddef.h>
+#include <stdlib.h>
 
 static unsigned int calculate_timeleft(double *timeleft,
                                        unsigned long long time_in_sec);
@@ -87,21 +87,21 @@ charset_str_t *parse_charset(charset_t charset)
     charset_str[i] = (char)0;
   }
 
-  #define ADD_CHARSETSTR(field)         \
-    do {                                \
-        const char *_field = (field);   \
-        if (_field) {                   \
-            strcat(charset_str, field); \
-        }                               \
-    } while(0)                          \
+#define ADD_CHARSETSTR(field)                                                  \
+  do {                                                                         \
+    const char *_field = (field);                                              \
+    if (_field) {                                                              \
+      strcat(charset_str, field);                                              \
+    }                                                                          \
+  } while (0)
 
   ADD_CHARSETSTR(lower);
   ADD_CHARSETSTR(upper);
   ADD_CHARSETSTR(numbers);
   ADD_CHARSETSTR(symbols);
 
-  #undef ADD_CHARSETSTR
-  
+#undef ADD_CHARSETSTR
+
   charset_str_struct.charset = charset_str;
   charset_str_struct.length = len;
 
@@ -126,25 +126,26 @@ void print_time(charset_str_t *charset_str, size_t length)
   }
   printf("This password as an entropy is : %lf.\n", entropy);
 
-  if (time > MILLENNIUM_SECONDS*1000) {
+  if (time > MILLENNIUM_SECONDS * 1000) {
     printf(
         "It would take more than 1000 millenniums to crack this password !\n");
   } else {
     time_data_t *times = timeconvert(time);
-    #define PRINT_TIME_FIELD(field) \
-        do {                        \
-            if (times->field != 0) { \
-                printf("%zu %s ", times->field, #field);\
-            }\
-        } while (0)\
+
+#define PRINT_TIME_FIELD(field)                                                \
+  do {                                                                         \
+    if (times->field != 0) {                                                   \
+      printf("%zu %s ", times->field, #field);                                 \
+    }                                                                          \
+  } while (0)
 
     PRINT_TIME_FIELD(millennium);
     PRINT_TIME_FIELD(years);
     PRINT_TIME_FIELD(months);
     PRINT_TIME_FIELD(hours);
     PRINT_TIME_FIELD(minutes);
-    printf("%zu seconds ", times->seconds); 
-    
+    printf("%zu seconds ", times->seconds);
+
     printf("to crack !\n");
   }
 }
@@ -155,7 +156,7 @@ time_data_t *timeconvert(const double seconds)
 
   static time_data_t time;
 
-  time.millennium = calculate_timeleft(&timeleft, MILLENNIUM_SECONDS); 
+  time.millennium = calculate_timeleft(&timeleft, MILLENNIUM_SECONDS);
   time.years = calculate_timeleft(&timeleft, 3600 * 24 * 365);
   time.months = calculate_timeleft(&timeleft, 3600 * 24 * 30);
   time.days = calculate_timeleft(&timeleft, 3600 * 24);
@@ -169,7 +170,7 @@ time_data_t *timeconvert(const double seconds)
 static unsigned int calculate_timeleft(double *timeleft,
                                        unsigned long long time_in_sec)
 {
-  unsigned int result = (unsigned int) (*timeleft / time_in_sec);
+  unsigned int result = (unsigned int)(*timeleft / time_in_sec);
   *timeleft -= result * time_in_sec;
   return result;
 }
