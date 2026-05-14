@@ -131,19 +131,20 @@ void print_time(charset_str_t *charset_str, size_t length)
         "It would take more than 1000 millenniums to crack this password !\n");
   } else {
     time_data_t *times = timeconvert(time);
-    if (times->millennium != 0)
-      printf("%ld millennium ", times->millennium);
-    if (times->years != 0)
-      printf("%ld years ", times->years);
-    if (times->months != 0)
-      printf("%ld months ", times->months);
-    if (times->days != 0)
-      printf("%ld days ", times->days);
-    if (times->hours != 0)
-      printf("%ld hours ", times->hours);
-    if (times->minutes != 0)
-      printf("%ld minutes ", times->minutes);
-    printf("%ld seconds ", times->seconds);
+    #define PRINT_TIME_FIELD(field) \
+        do {                        \
+            if (times->field != 0) { \
+                printf("%zu %s ", times->field, #field);\
+            }\
+        } while (0)\
+
+    PRINT_TIME_FIELD(millennium);
+    PRINT_TIME_FIELD(years);
+    PRINT_TIME_FIELD(months);
+    PRINT_TIME_FIELD(hours);
+    PRINT_TIME_FIELD(minutes);
+    printf("%zu seconds ", times->seconds); 
+    
     printf("to crack !\n");
   }
 }
