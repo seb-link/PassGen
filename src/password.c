@@ -87,15 +87,21 @@ charset_str_t *parse_charset(charset_t charset)
     charset_str[i] = (char)0;
   }
 
-  if (lower)
-    strcat(charset_str, lower);
-  if (upper)
-    strcat(charset_str, upper);
-  if (numbers)
-    strcat(charset_str, numbers);
-  if (symbols)
-    strcat(charset_str, symbols);
+  #define ADD_CHARSETSTR(field)         \
+    do {                                \
+        const char *_field = (field);   \
+        if (_field) {                   \
+            strcat(charset_str, field); \
+        }                               \
+    } while(0)                          \
 
+  ADD_CHARSETSTR(lower);
+  ADD_CHARSETSTR(upper);
+  ADD_CHARSETSTR(numbers);
+  ADD_CHARSETSTR(symbols);
+
+  #undef ADD_CHARSETSTR
+  
   charset_str_struct.charset = charset_str;
   charset_str_struct.length = len;
 
