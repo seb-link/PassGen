@@ -24,8 +24,10 @@ char *generate_password(charset_t charset, size_t length)
     return NULL;
 
   charset_str_t *charset_str = parse_charset(charset);
-  if (!charset_str)
+  if (!charset_str) {
+    free(password);
     return NULL;
+  }
 
   int index;
   for (size_t i = 0; i < length; ++i) {
@@ -73,7 +75,7 @@ charset_str_t *parse_charset(charset_t charset)
   }
   if (charset & CHAR_UPPER) {
     len += 26;
-    upper = "ABCDEFGHIJKMLNOPQRSTUVWXYZ";
+    upper = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
   }
   if (charset & CHAR_NUMS) {
     len += 10;
@@ -118,12 +120,12 @@ void print_time(charset_str_t *charset_str, size_t length)
   double possibilities = pow(charset_str->length, length);
   double entropy = log2(possibilities);
 
-  size_t speed =
-      240 * (size_t)(pow(10, 9)); // Assuming 240 billions guess per seconds
+  double speed =
+      240 * (double)(pow(10, 9)); // Assuming 240 billions guess per seconds
   double time = possibilities / speed;
 
   if (entropy == INFINITY) {
-    printf("This password powerfulness is impossible to compute making it "
+    printf("Couldn't compute this password powerfulness making it "
            "virtually impossible to crack with the use of conventional "
            "methods.\n");
     return;
@@ -133,8 +135,10 @@ void print_time(charset_str_t *charset_str, size_t length)
   if (time > SECONDS_MILLENNIUM * 1000) {
     printf(
         "It would take more than 1000 millenniums to crack this password !\n");
-  } else {
-    time_data_t *times = timeconvert(time);
+        return;
+  }
+
+  time_data_t *times = timeconvert(time);
 
 #define PRINT_TIME_FIELD(field)                                                \
   do {                                                                         \
@@ -143,15 +147,15 @@ void print_time(charset_str_t *charset_str, size_t length)
     }                                                                          \
   } while (0)
 
-    PRINT_TIME_FIELD(millennium);
-    PRINT_TIME_FIELD(years);
-    PRINT_TIME_FIELD(months);
-    PRINT_TIME_FIELD(hours);
-    PRINT_TIME_FIELD(minutes);
-    printf("%zu seconds ", times->seconds);
+  PRINT_TIME_FIELD(millennium);
+  PRINT_TIME_FIELD(years);
+  PRINT_TIME_FIELD(months);
+  PRINT_TIME_FIELD(days);
+  PRINT_TIME_FIELD(hours);
+  PRINT_TIME_FIELD(minutes);
+  printf("%zu seconds ", times->seconds);
 
-    printf("to crack !\n");
-  }
+  printf("to crack !\n");
 }
 
 time_data_t *timeconvert(const double seconds)

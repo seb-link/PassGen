@@ -2,7 +2,6 @@
 #define PASSWORD_H
 
 
-#include "charset.h"
 
 #if defined(_WIN32)
 #  define _CRT_RAND_S /* For rand_s on windows */
@@ -10,6 +9,7 @@
 #  define _GNU_SOURCE
 #endif
 
+#include "charset.h"
 
 #include <stdlib.h>
 #include <stddef.h>
