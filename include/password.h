@@ -1,25 +1,21 @@
 #ifndef PASSWORD_H
 #define PASSWORD_H
 
-#include <stddef.h>
 
 #include "charset.h"
 
-
-#ifdef _WIN32
-
-#define random_int random_int_windows
-int random_int_windows(size_t up_range);
-#define _CRT_RAND_S /* For rand_s on windows */
-
-#else
-
-#define random_int random_int_nix
-int random_int_nix(size_t up_range);
-
+#if defined(_WIN32)
+#  define _CRT_RAND_S /* For rand_s on windows */
+#elif defined(__linux__)
+#  define _GNU_SOURCE
 #endif
 
+
 #include <stdlib.h>
+#include <stddef.h>
+#if defined(__linux__)
+#  include <sys/random.h>
+#endif
 
 typedef struct {
   char*  charset;
@@ -43,6 +39,7 @@ char*           generate_password  (charset_t charset, size_t length);
 charset_str_t*  parse_charset      (charset_t charset);
 void            print_time         (charset_str_t* charset_str, size_t length);
 time_data_t*    timeconvert        (double seconds);
+int             random_int         (unsigned int up_range);
 
 #endif
 

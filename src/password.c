@@ -10,8 +10,8 @@ static unsigned int calculate_timeleft(double *timeleft,
 /**
  * This function generate a password
  *
- * @param[.in]  charset  The charset to use
- * @param[.in]  length   The length of the password
+ * @param[in]  charset  The charset to use
+ * @param[in]  length   The length of the password
  *
  * @exception NULL if an error is encountered
  *
@@ -24,22 +24,25 @@ char *generate_password(charset_t charset, size_t length)
     return NULL;
 
   charset_str_t *charset_str = parse_charset(charset);
+  if (!charset_str)
+    return NULL;
 
   int index;
   for (size_t i = 0; i < length; ++i) {
     index = random_int(charset_str->length);
     if (index < 0) {
       free(password);
-      free(charset_str->charset);
-      return NULL;
+      password = NULL;
+      goto end;
     }
     password[i] = charset_str->charset[index];
   }
   password[length] = '\0';
 
-  free(charset_str->charset);
-
   print_time(charset_str, length);
+
+end:
+  free(charset_str->charset);
 
   return password;
 }
@@ -47,9 +50,11 @@ char *generate_password(charset_t charset, size_t length)
 /**
  * This function convert a charset_t into a charset_str_t
  *
- * @param[.in]  charset  The charset to be converted
+ * @param[in]  charset  The charset to be converted
  *
- * @return the charset as a pointer to a charset_str_t (defined in "password.h")
+ * @exception Returns NULL
+ * 
+ * @return the charset as a pointer to a charset_str_t (defined in "password.h") 
  **/
 charset_str_t *parse_charset(charset_t charset)
 {
@@ -79,13 +84,12 @@ charset_str_t *parse_charset(charset_t charset)
     symbols = "!#$&()*+,-./:;<=>?@[\\]^_{|}";
   }
 
-  charset_str = malloc(len + 1);
-  if (!charset_str)
+  charset_str = calloc(len + 1, sizeof(char));
+  if (!charset_str) {
+    perror("calloc: ");
     return NULL;
-
-  for (size_t i = 0; i < len + 1; ++i) {
-    charset_str[i] = (char)0;
   }
+
 
 #define ADD_CHARSETSTR(field)                                                  \
   do {                                                                         \
@@ -175,36 +179,27 @@ static unsigned int calculate_timeleft(double *timeleft,
   return result;
 }
 
-#ifdef _WIN32
-// This function returns a random number. Only with windows
-int random_int_windows(size_t up_range)
+int random_int(unsigned int up_range)
 {
-  printf("WARNING : Untested function ! Use at your own risk !\n");
-  unsigned int *index;
-  if (rand_s(index) != 0) {
-    return -1;
-  }
-  int return_value = *index % up_range;
-  return return_value;
-}
-#else
-// This function returns a random number. Compatible with *NIX systems
-int random_int_nix(size_t up_range)
-{
-  FILE *f = fopen("/dev/urandom", "r");
-  if (!f) {
-    perror("fopen");
-    return -1;
-  }
+  if (up_range == 0) return 0;
 
-  int num;
-  size_t res = fread(&num, sizeof(num), 1, f);
-  if (res == 0) {
-    perror("fread");
-    return -1;
-  }
-  fclose(f);
+  // limit is divisible by up_range to negate modulo bias
+  uint32_t limit = UINT32_MAX - (UINT32_MAX % up_range);
+  uint32_t num;
+
+  do {
+#if defined(_WIN32)
+    if (rand_s(&num) != 0) {
+        return -1;
+      }
+#elif (defined(__APPLE__) && defined(__MACH__)) || defined(__OpenBSD__)
+    num = arc4random();
+#elif defined(__linux__)
+    if (getrandom(&num, sizeof(num), 0) != sizeof(num)) {
+      return -1;
+    }
+#endif
+  } while (num >= limit);
 
   return num % up_range;
 }
-#endif
