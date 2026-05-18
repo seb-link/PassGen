@@ -126,7 +126,7 @@ void print_time(charset_str_t *charset_str, size_t length)
   }
   printf("This password as an entropy is : %lf.\n", entropy);
 
-  if (time > MILLENNIUM_SECONDS * 1000) {
+  if (time > SECONDS_MILLENNIUM * 1000) {
     printf(
         "It would take more than 1000 millenniums to crack this password !\n");
   } else {
@@ -156,7 +156,7 @@ time_data_t *timeconvert(const double seconds)
 
   static time_data_t time;
 
-  time.millennium = calculate_timeleft(&timeleft, MILLENNIUM_SECONDS);
+  time.millennium = calculate_timeleft(&timeleft, SECONDS_MILLENNIUM);
   time.years = calculate_timeleft(&timeleft, 3600 * 24 * 365);
   time.months = calculate_timeleft(&timeleft, 3600 * 24 * 30);
   time.days = calculate_timeleft(&timeleft, 3600 * 24);

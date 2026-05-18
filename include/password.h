@@ -36,6 +36,9 @@ typedef struct {
   size_t millennium;
 } time_data_t ;
 
+#define DAYS_MILLENIUM 36524250LL
+#define SECONDS_MILLENNIUM (3600 * 24 * DAYS_MILLENIUM)
+
 char*           generate_password  (charset_t charset, size_t length);
 charset_str_t*  parse_charset      (charset_t charset);
 void            print_time         (charset_str_t* charset_str, size_t length);
