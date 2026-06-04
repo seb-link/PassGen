@@ -1,0 +1,37 @@
+Language: Cpp
+BasedOnStyle: LLVM
+
+# Indentation and line length
+IndentWidth: 4 
+ColumnLimit: 80
+UseTab: Never
+
+PointerAlignment: Right 
+
+IndentPPDirectives: AfterHash
+
+# Brace wrapping (Braces on new line for functions, same line for control statements)
+BreakBeforeBraces: Custom
+BraceWrapping:
+  AfterFunction: true
+  AfterControlStatement: false
+  AfterStruct: false
+  AfterEnum: false
+  AfterUnion: false
+  BeforeElse: false
+  BeforeWhile: false
+
+# Alignments for tables of variables, macros, and function declarations
+AlignConsecutiveDeclarations: true
+AlignConsecutiveAssignments: true
+AlignConsecutiveMacros: true
+
+# Short statements
+AllowShortIfStatementsOnASingleLine: WithoutElse
+AllowShortLoopsOnASingleLine: false
+AllowShortFunctionsOnASingleLine: Empty
+
+# Spaces
+SpaceBeforeParens: ControlStatements
+SpaceAfterCStyleCast: false
+...

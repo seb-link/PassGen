@@ -5,25 +5,24 @@
 
 int main(void)
 {
-  charset_t charset = get_charset(); // Get the character to use
-  if (charset == 0)
-    return 1;
+    charset_t charset = get_charset(); // Get the character to use
+    if (charset == 0) return 1;
 
-  size_t length = get_length(); // Get the password length
-  if (length == 0) {
-    printf("Error occured\n");
-    return 1;
-  }
-  char *password = NULL; // Password to be generated
+    size_t length = get_length(); // Get the password length
+    if (length == 0) {
+        printf("Error occured\n");
+        return 1;
+    }
+    char *password = NULL; // Password to be generated
 
-  password = generate_password(charset, length);
-  if (!password) { // If password == NULL then an error occured
-    fprintf(stderr, "An error occured while generating the password\n");
-    return 1;
-  }
-  printf("Your password is : ");
-  puts(password);
+    password = generate_password(charset, length);
+    if (!password) { // If password == NULL then an error occured
+        fprintf(stderr, "An error occured while generating the password\n");
+        return 1;
+    }
+    printf("Your password is : ");
+    puts(password);
 
-  free(password);
-  return 0;
+    free(password);
+    return 0;
 }
