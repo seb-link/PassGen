@@ -18,9 +18,8 @@ charset_t get_charset(void)
         return 0;
     }
 
-    printf(
-        "Enter the charset to use (1 : lowercase, 2 : uppercase, 3 : numbers, "
-        "4 : symbols) : ");
+    printf("Enter the charset to use (1 : lowercase, 2 : uppercase,"
+           "3 : numbers, 4 : symbols) : ");
     (void)fgets(buffer, 64, stdin);
 
     int current = 0;

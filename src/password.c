@@ -192,12 +192,14 @@ int random_int(unsigned int up_range)
     do {
 #if defined(_WIN32)
         if (rand_s(&num) != 0) {
+            perror("rand_s: ");
             return -1;
         }
 #elif (defined(__APPLE__) && defined(__MACH__)) || defined(__OpenBSD__)
         num = arc4random();
 #elif defined(__linux__)
         if (getrandom(&num, sizeof(num), 0) != sizeof(num)) {
+            perror("getrandom: ");
             return -1;
         }
 #endif
